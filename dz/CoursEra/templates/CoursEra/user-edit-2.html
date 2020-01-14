@@ -1,0 +1,43 @@
+{% extends "./form-edit.html" %}
+{% load static %}
+{% block form_tag %}
+    {% url 'user-edit' as act_url %}
+    {% with action_url=act_url %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+{% block form_title %}Редактирование профиля{% endblock %}
+{% block form_content %}
+    {# for avatar item #}
+    {% if field.name == 'avatar' %}
+        <div class="form-row m-0 p-0 mb-3">
+            <div class="col col-12 col-sm-2 p-0 mb-2 m-md-0">
+                <p class="text-left d-inline">Текущий аватар</p>
+            </div>
+            <div class="col col-12 m-0 p-0 col-sm-10"><img class="ml-1 img-fluid"
+                                                           style="max-width: 150px;max-height: 150px;"
+                                                           src="{% get_media_prefix %}{{ request.user.avatar.name }}">
+            </div>
+        </div>
+    {% endif %}
+    <div class="form-group row">
+        <label class="text-left col-sm-2 col-form-label"
+               for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {# for avatar item #}
+        {% if field.name == 'avatar' %}
+            <div class="custom-file col-sm-10" id="validatedCustomFile">
+                {{ field }}
+                <label class="custom-file-label mx-3" for="validatedCustomFile">Аватар...</label>
+            </div>
+            {# for generic item #}
+        {% else %}
+            <div class="col-sm-10">
+                {{ field }}
+            </div>
+        {% endif %}
+        <div class="ml-3">
+            {{ block.super }}
+        </div>
+    </div>
+{% endblock %}
+{% block submit_button_title %}Обновить данные{% endblock %}

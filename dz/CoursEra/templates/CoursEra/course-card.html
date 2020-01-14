@@ -1,0 +1,15 @@
+{% load static %}
+<div class="col-md-6 col-lg-4 col-xl-3 mt-3">
+    <div class="card shadow border-0 h-100 mx-auto shadow-anim"
+         style="max-height: 350px;max-width: 350px;min-height: 350px;">
+        <div class="card-body d-flex flex-column align-items-center">
+            <div class="row flex-column" style="width: 250px;height: 170px;">
+                <div class="col h-100"><img class="img-fluid"
+                                            src="{% get_media_prefix %}{{ course.image.name }}"></div>
+                <div class="col"></div>
+            </div>
+            <h5 class="card-title mt-2">{{ course.name }}</h5><a
+                class="card-link d-flex flex-grow-1 align-items-end stretched-link"
+                href="{% url 'course' course.id %}">Подробнее...</a></div>
+    </div>
+</div>

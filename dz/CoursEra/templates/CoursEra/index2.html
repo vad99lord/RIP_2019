@@ -1,0 +1,52 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block extraCSS %}
+    <link rel="stylesheet" href="{% static 'CoursEra/css/custom-link.css' %}">
+{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="row d-inline-flex my-2">
+        <div class="col border-right border-dark"><a class="link" href="{% url 'index' %}">Все курсы</a></div>
+        <div class="col"><a class="text-nowrap link" href="{% url 'index' %}?user_courses=true">Мои курсы</a></div>
+    </div>
+    {% endif %}
+    {% if page_obj.paginator.count > 0 %}
+    <div class="row">
+        {% for course in page_obj %}
+            {% include 'CoursEra/course-card.html' with course=course %}
+        {% endfor %}
+    </div>
+    <div class="col d-flex justify-content-center mt-4">
+        <nav>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    {% comment %}
+                    <li class="page-item"><a class="page-link" href="?page=1" aria-label="Last"><span
+                            aria-hidden="true">первый</span></a></li>
+                    {% endcomment %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+                                             aria-label="Previous"><span
+                            aria-hidden="true">&laquo;</span></a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }} </a></li>
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                                             aria-label="Last"><span
+                            aria-hidden="true">&raquo;</span></a></li>
+                    {% comment %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
+                                                 aria-label="Previous"><span
+                                aria-hidden="true">последний</span></a></li>
+                        {% endcomment %}
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% else %}
+        {% if user.is_authenticated %}
+            <h5 class="m-3">похоже, что {{user.username }} не подписан на курсы</h5>
+        {% else %}
+            <h5 class="m-3">0 результатов по запросу <i>{{ search }}</i></h5>
+        {% endif %}
+    {% endif %}
+{% endblock %}

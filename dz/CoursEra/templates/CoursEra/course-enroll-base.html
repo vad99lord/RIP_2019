@@ -1,0 +1,27 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block extraCSS %}
+    <link rel="stylesheet" href="{% static 'CoursEra/css/custom-link.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="row d-inline-flex my-2">
+        <div class="col border-right border-dark"><a class="link" href="{% block course_link %}{% endblock %}">О курсе</a></div>
+            <div class="col"><a class="text-nowrap link" href="{% block subs_link %}{% endblock %}">Слушатели</a></div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-auto col-md-9 pt-3 pb-2">
+            {% block left_column %}
+            {% endblock %}
+        </div>
+        <div class="col-auto col-sm-auto col-md-3 d-flex flex-grow-1 justify-content-center align-items-start align-items-xl-start sticky-top py-3 pt-md-5"
+             style="background-color: #56c6c6;">
+            <div class="sticky-top">
+                <h3 style="color: #ffffff;">{% block button_header %}{% endblock %}</h3>
+                <form action="{% block unenroll_link %}{% endblock %}" method='GET'>
+                        <button class="btn btn-primary btn-block border-0" type="submit"
+                        style="background-color: #6698eb;color: #ffffff;"> {% block button_text %}{% endblock %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

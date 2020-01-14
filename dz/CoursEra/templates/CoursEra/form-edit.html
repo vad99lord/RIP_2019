@@ -1,0 +1,35 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block extraJS %}
+    <script src="{% static 'CoursEra/js/file-input-name.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+    <div class="row mt-4 mb-2">
+        <div class="col mx-2 mx-md-3 mx-xl-5">
+        {% block form_tag %}
+            <form class="py-3 mx-xl-4 " enctype="multipart/form-data" action="{{ action_url }}" method="post">
+                {% endblock %}
+                {% csrf_token %}
+                <h5 class="font-weight-bold mb-0 mb-sm-3"><strong>{% block form_title %}{% endblock %}</strong></h5>
+
+
+                {% block form_header %}
+                {% include "CoursEra/form-messages.html" with form_messages=messages %}
+                {% include "CoursEra/form-non-field-errors.html" with form=form %}
+                {% endblock %}
+
+                {% for field in form %}
+                    {% block form_content %}
+                        {% include "CoursEra/form-helps.html" with field=field %}
+                        {% include "CoursEra/form-errors.html" with field=field %}
+                    {% endblock %}
+                {% endfor %}
+                {% block submit_button %}
+                <button class="btn btn-primary d-inline-block border-0 mt-1" type="submit"
+                        style="background-color: #6698eb;">{% block submit_button_title %}Сохранить данные{% endblock %}
+                </button>
+                {% endblock %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

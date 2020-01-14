@@ -1,0 +1,1 @@
+$("#submit-modal").click(function(){$("#confirm-exit").modal("hide")});

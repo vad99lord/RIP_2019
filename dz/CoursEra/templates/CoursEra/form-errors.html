@@ -1,0 +1,13 @@
+{% if field.errors %}
+    {% for error in field.errors %}
+        <div class="invalid-feedback d-flex">
+            {{ error|escape }}
+        </div>
+    {% endfor %}
+{% else %}
+    {% if form.is_bound %}
+        <div class="valid-feedback d-flex">
+            Looks good!
+        </div>
+    {% endif %}
+{% endif %}

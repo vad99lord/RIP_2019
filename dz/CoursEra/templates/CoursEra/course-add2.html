@@ -1,0 +1,29 @@
+{% extends "./form-edit.html" %}
+{% block form_tag %}
+    {% url 'course-add' as act_url %}
+    {% with action_url=act_url %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
+
+{% block form_title %} Добавление нового курса {% endblock %}
+{% block form_content %}
+    <div class="form-group row">
+        <label class="text-left col-sm-2 col-form-label"
+               for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% if field.name == 'image' %}
+            <div class="custom-file col-sm-10" id="validatedCustomFile">
+                {{ field }}
+                <label class="custom-file-label mx-3" for="validatedCustomFile">Фото...</label>
+            </div>
+        {% else %}
+            <div class="col-sm-10">
+                {{ field }}
+            </div>
+        {% endif %}
+        <div class="ml-3">
+            {{ block.super }}
+        </div>
+    </div>
+{% endblock %}
+{% block submit_button_title %}Добавить данные{% endblock %}

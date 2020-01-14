@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{% block title %}CoursEra{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'CoursEra/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'CoursEra/fonts/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'CoursEra/fonts/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'CoursEra/css/Footer-Basic.css' %}">
+    <link rel="stylesheet" href="{% static 'CoursEra/css/Navigation-with-Search.css' %}">
+    <link rel="stylesheet" href="{% static 'CoursEra/css/ShadowAnimation.css' %}">
+    {% block extraCSS %}
+    {% endblock %}
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}" style="margin-right: 36px;color: #3b85a5;">КурсЭра</a>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+                class="collapse navbar-collapse" id="navcol-1">
+            {% block search %}
+                <form class="form-inline mr-auto" action="{% url 'index' %}">
+                    <div class="form-group py-1 py-md-auto">
+                        <label for="search-field">
+                            <i class="fa fa-search" style="color: #aeaeae;"></i>
+                        </label>
+                        <input class="form-control search-field" type="search" id="search-field" name="search"
+                               placeholder="Поиск курсов...">
+                    </div>
+                </form>
+            {% endblock %}
+            {% if user.is_authenticated and not request.user.is_superuser %}
+                {% block auth_buttons %}
+                    <div class="row d-inline-flex p-0 m-0">
+                        <div class="col">
+                            <a href="{% url 'user-edit' %}">
+                                <img src="{% get_media_prefix %}{{ request.user.avatar.name }}" style="width: 50px;height: 50px;"/>
+                            </a>
+                        </div>
+                        <div class="col m-0 p-0">
+                            <ul class="nav navbar-nav d-inline-flex">
+                                <li role="presentation" class="nav-item d-inline-flex flex-column">
+                                    <div class="nav-item dropdown"><a data-toggle="dropdown" aria-expanded="false"
+                                                                      class="dropdown-toggle nav-link text-nowrap pl-1 py-0"
+                                                                      href="#" style="font-size: 20px;">{{ request.user.username }}</a>
+                                        <div role="menu" class="dropdown-menu dropdown-menu-right">
+                                            <a role="presentation" class="dropdown-item" href="{% url 'user-edit' %}">Профиль</a>
+                                            <a role="presentation" class="dropdown-item" href="{% url 'password_change' %}">Пароль</a>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutters">
+                                        <div class="col px-1"><a class="text-nowrap nav-link" id="signout-link"
+                                                                 style="padding: 0!important;" href="#confirm-exit"
+                                                                 data-toggle="modal"
+                                                                 data-target="#confirm-exit">Выйти</a></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% else %}
+                {% block unauth_buttons %}
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'login' %}">Войти</a>
+                        </li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'signup' %}">Регистрация</a>
+                        </li>
+                    </ul>
+                {% endblock %}
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    {% if user.is_authenticated and not request.user.is_superuser %}
+        <div role="dialog" tabindex="-1" class="modal fade" id="confirm-exit">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Выход</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Уверены что хотите выйти?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-light border-0" type="button" data-dismiss="modal">Отмена</button>
+                        <a href='{% url 'logout' %}' class="btn btn-primary text-white border-0" role="button" style="background-color: #6698eb;">
+                            Выйти
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'CoursEra/js/modal-logout.js' %}" defer></script>
+    {% endif %}
+    {% block content %}{% endblock %}
+</div>
+<div class="footer-basic">
+    <footer>
+        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i
+                class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a
+                href="#"><i class="icon ion-social-facebook"></i></a></div>
+        {% block footer_links %}
+            <ul class="list-inline">
+                <li class="list-inline-item"></li>
+                <li class="list-inline-item"><a href="{% url 'about' %}">Помощь</a></li>
+                <li class="list-inline-item"><a href="{% url 'about' %}">Контакты</a></li>
+                <li class="list-inline-item"><a href="{% url 'about' %}">О нас</a></li>
+                <li class="list-inline-item"><a href="{% url 'about' %}">Команда</a></li>
+            </ul>
+        {% endblock %}
+
+        <div class="row d-flex align-items-center m-4">
+            <div class="col d-flex justify-content-end">
+                {% if not request.user.is_superuser %}
+                <a class="text-monospace text-black-50 border rounded shadow-sm border-0 p-1 text-decoration-none"
+                    href="{% url 'admin:index' %}" style="background-color: #b2fef7;">Админу</a>
+                {% endif %}
+                {% if  request.user.is_superuser %}
+                    <div class="dropdown">
+                        <button class="btn btn-info dropdown-toggle text-monospace text-black-50" data-toggle="dropdown"
+                                aria-expanded="false" type="button" style="background-color: #b2fef7;">
+                            Администрирование 
+                        </button>
+                        <div role="menu" class="dropdown-menu dropdown-menu-right">
+                            <a role="presentation" class="dropdown-item"
+                               href="{% url 'admin:index' %}" style="background-color: #b2fef7;">Админка</a>
+                            <a role="presentation" class="dropdown-item" href="{% url 'course-add' %}"
+                            style="background-color: #b2fef7;" >Добавить курс</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <p class="copyright">{% block copyright %}КурсЭра © 2019{% endblock %}</p>
+    </footer>
+</div>
+<script src="{% static 'CoursEra/js/jquery.min.js' %}"></script>
+<script src="{% static 'CoursEra/js/bootstrap.min.js' %}"></script>
+{% block extraJS %}
+{% endblock %}
+</body>
+
+</html>

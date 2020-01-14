@@ -1,0 +1,31 @@
+{% extends "./course-enroll-base.html" %}
+{% load static %}
+{% block course_link %}
+    {% url 'course-enrolled' course.id%}
+{% endblock %}
+{% block subs_link %}
+    {% url 'course-subs' course.id%}
+{% endblock %}
+{% block unenroll_link %}
+    {% url 'course-unenroll' course.id %}
+{% endblock %}
+{% block left_column %}
+    <h2 class="mb-3 text-center">{{ course.name }}</h2><img class="d-block mb-5 mx-auto img-fluid"
+                                                            src="{% get_media_prefix %}{{ course.image.name }}">
+    <section>
+        <h3>Описание курса</h3>
+        <p class="pr-3">
+            {{ course.description|linebreaksbr }}
+        </p>
+        <section class="pt-2">
+            <p class="d-inline pr-2" style="font-size: 14px;">Дата добавления курса:</p><em><span
+                style="font-size: 14px;">{{ course.pub_date }}</span></em></section>
+    </section>
+
+{% endblock %}
+{% block button_header %}
+    Вы подписаны
+{% endblock %}
+{% block button_text %}
+    Отписаться
+{% endblock %}

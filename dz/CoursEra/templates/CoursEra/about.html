@@ -1,0 +1,19 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block extraCSS %}
+    <link rel="stylesheet" href="{% static 'CoursEra/css/About.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div class="row">
+        <div class="col d-inline-flex justify-content-center py-3 py-md-4">
+            <div class="card d-block align-content-center text-center border-0">
+                <div class="card-body"><img class="rounded-circle" src="{% static 'CoursEra/img/about-avatar.png' %}" />
+                    <h3 class="font-weight-bold">Труфанов Вадим</h3>
+                    <p class="text-monospace group-name">ИУ5-53Б</p>
+                    <p class="description">Домашнее задание по курсу РИП<br />Вариант 19<br /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

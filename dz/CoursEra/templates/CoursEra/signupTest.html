@@ -1,0 +1,80 @@
+{% extends "./base.html" %}
+{% load static %}
+{% block extraJS %}
+ <script src="{% static 'CoursEra/js/file-input-name.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+    <div class="row mt-4 mb-2 mx-2 mx-md-0">
+        <div class="col d-flex justify-content-center">
+            <div class="card border rounded shadow-sm d-block border-0"
+                 style="color: #222222;background-color: #f2f5f8;max-width: 400px;">
+                <div class="card-body">
+                    <form class="py-3" enctype="multipart/form-data" action="{% url 'signup' %}" method="post">
+                        {% csrf_token %}
+                        <h5 class="text-center d-xl-flex justify-content-xl-center font-weight-bold mb-4">
+                            Регистрация</h5>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success text-center" role="alert"> {{ message }} </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if form.errors %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        {% for field in form %}
+                            <div class="form-group row">
+                                <label class="text-left col-sm-12 col-form-label font-weight-bold"
+                                       for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {# for avatar item #}
+                                {% if field.name == 'avatar' %}
+                                    <div class="custom-file mx-3" id="validatedCustomFile">
+
+                                        {{ field }}
+                                        <label class="custom-file-label" for="validatedCustomFile" >Аватар...</label>
+                                    </div>
+                                    {# for generic item #}
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        {{ field }}
+                                    </div>
+                                {% endif %}
+
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted ml-3">{{ field.help_text|safe }}</small>
+                                {% endif %}
+
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                        <div class="invalid-feedback d-flex pl-3">
+                                            {{ error|escape }}
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    {% if form.is_bound %}
+                                        <div class="valid-feedback d-flex pl-3">
+                                            Looks good!
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+
+                            </div>
+                        {% endfor %}
+                        {#  <input type="submit" value="Submit">  #}
+                        <button class="btn btn-primary btn-block text-center border-light mx-auto"
+                                type="submit" style="background-color: #6698eb;">Регистрация
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

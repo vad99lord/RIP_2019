@@ -1,0 +1,5 @@
+{% if form_messages %}
+    {% for message in form_messages %}
+        <div class="alert alert-success text-center" role="alert"> {{ message }} </div>
+    {% endfor %}
+{% endif %}

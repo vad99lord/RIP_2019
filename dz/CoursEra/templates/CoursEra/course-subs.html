@@ -1,0 +1,28 @@
+{% extends "./course-enroll-base.html" %}
+{% load static %}
+{% block course_link %}
+    {% url 'course-enrolled' course_id%}
+{% endblock %}
+{% block subs_link %}
+    {% url 'course-subs' course_id%}
+{% endblock %}
+{% block unenroll_link %}
+    {% url 'course-unenroll' course_id %}
+{% endblock %}
+{% block left_column %}
+            {% if object_list %}
+            <ul class="list-group list-group-flush">
+                {% for user in object_list %}
+                    <li class="list-group-item">{{ user.username }}</li>
+                {% endfor %}
+            </ul>
+                {% else %}
+                    <h5 class="m-3">похоже, что на курс никто не подписан</h5>
+            {% endif %}
+{% endblock %}
+{% block button_header %}
+    Вы подписаны
+{% endblock %}
+{% block button_text %}
+    Отписаться
+{% endblock %}

@@ -1,0 +1,17 @@
+body {
+  background-color: #eef4f7;
+}
+
+.rounded-circle {
+  max-width: 160px;
+}
+
+.group-name {
+  color: #d0d0d0;
+  font-size: 14px;
+}
+
+.description {
+  color: #7d8285;
+}
+
